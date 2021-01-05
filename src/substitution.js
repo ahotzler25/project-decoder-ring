@@ -1,6 +1,4 @@
-const { db } = require('./db');
-
-
+const { substitutionDB } = require('./db');
 
 function substitution(input, alphabet, encode = true) {
 
