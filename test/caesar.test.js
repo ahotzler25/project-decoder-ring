@@ -16,7 +16,7 @@ describe('caesar', () => {
     it('should return alphabet + shift', () => {
         const shift = 3;
         const input = "abcdefghijklmnopqrstuvwxyz";
-        const encode = "true";
+        const encode = true;
         // const db = substitutionDB;
 
         const expected = "defghijklmnopqrstuvwxyzabc";
