@@ -1,77 +1,58 @@
 // Helper function checking shift
 function shiftTests(shift) {
     // (shift === 0 || shift < -25 || shift > 25 || !shift) ? false : true;
-    if (shift === 0 || shift < -25 || shift > 25 || !shift) {
+    if (!shift || shift === 0 || shift < -25 || shift > 25) {
         return false;
     } else {
         return true;
     };
 };
 
+const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-// Return false if shift = 0, shift < -25, shift > 25, or absent
-// Ignores capital letters; return message "A Message" === "a message"
-// If shifting right goes past end of alphabet, wrap back around
-// Maintains spaces and nonalphabetic symbols before/after encoding/decoding
-
-
-// Working; refactor later
+// Think about refactoring
 function caesar(input, shift, encode = true) {
+
+// Checks to ensure input was provided
+    if (!input) return false;
+
 // Calls helper function to test shift values
     if (!shiftTests(shift)) {
         return false;
     };
 
+
+    let lowerCaseInput = input.toLowerCase();
     let myCipher = [];
 
-    // ENCODING
-    if (encode) {
-        for (let i = 0; i < input.length; i++) {
-           // Test for uppercase
-           if (input.charCodeAt(i) > 64 && input.charCodeAt(i) < 91) {
-            if ((input.charCodeAt(i) + shift) > 90) {
-                myCipher.push(String.fromCharCode((input.charCodeAt(i) + shift) - 26));
-            } else {
-                myCipher.push(String.fromCharCode(input.charCodeAt(i) + shift))
-            };
-        };
 
-            // Test for lowercase
-            if (input.charCodeAt(i) > 96 && input.charCodeAt(i) < 123) {
-                if ((input.charCodeAt(i) + shift) > 122) {
-                    myCipher.push(String.fromCharCode((input.charCodeAt(i) + shift) - 26));
-                } else {
-                    myCipher.push(String.fromCharCode(input.charCodeAt(i) + shift));
-                }
-            } else if (input.charCodeAt(i) > 31 && input.charCodeAt(i) < 65) {
-                myCipher.push(input.charAt(i));
+    for (let i = 0; i < lowerCaseInput.length; i++) {
+        for (let j = 0; j < alphabet.length; j++) {
+            if (!alphabet.includes(lowerCaseInput[i])) {
+                myCipher.push(lowerCaseInput[i]);
+                break;
             };
-        };
 
-        // DECODING
-    } else { 
-        for (let i = 0; i < input.length; i++) {
-            // Test for uppercase
-            if (input.charCodeAt(i) > 64 && input.charCodeAt(i) < 91) {
-                if (input.charCodeAt(i) - shift < 65) {
-                    myCipher.push(String.fromCharCode((input.charCodeAt(i) - shift) + 26));
-                } else {
-                    myCipher.push(String.fromCharCode(input.charCodeAt(i) - shift));
+            if (alphabet[j] === lowerCaseInput[i]) {
+                let shiftedLetter = j + shift;
+                
+                if (!encode) {
+                    shiftedLetter = j - shift
                 };
-            };
 
-            // Test for lowercase
-            if (input.charCodeAt(i) > 96 && input.charCodeAt(i) < 123) {
-                if (input.charCodeAt(i) - shift < 97) {
-                    myCipher.push(String.fromCharCode((input.charCodeAt(i) - shift) + 26));
+                if (shiftedLetter < 0) {
+                    shiftedLetter += 26;
+                    myCipher.push(alphabet[shiftedLetter]);
+                } else if (shiftedLetter > 25) {
+                    shiftedLetter -= 26;
+                    myCipher.push(alphabet[shiftedLetter]);
                 } else {
-                    myCipher.push(String.fromCharCode(input.charCodeAt(i) - shift));
+                    myCipher.push(alphabet[shiftedLetter]);
                 }
-            } else if (input.charCodeAt(i) < 65 || input.charCodeAt(i) > 123) {
-                myCipher.push(input.charAt(i));
-            };
+            }
+
         };
-    };
+    };  
 
     return myCipher.join("");
 };

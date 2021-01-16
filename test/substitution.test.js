@@ -4,14 +4,14 @@ const expect = require('chai').expect;
 const substitution = require('../src/substitution');
 
 describe('substitution', () => {
-    it ('should return string if alphabet length is not 26', () => {
+    it ('should return false if alphabet length is not 26', () => {
         const alphabet = "plmoknijbuhvygctfxrdzeswa";
         const input = "ykrrpik";
         const encode = true;
 
-        const expected = "Return is not long enough.";
+        const expected = false;
         const actual = substitution(input, alphabet, encode);
-        expect(actual).to.equal(expected);
+        expect(actual).to.be.false;
     });
     it ('should return false if alphabet contains duplicate letters', () => {
         const alphabet = ["p", "l", "m", "o", "k", "n", "i", "j", "b", "u", "h", "v", "y", "g", "c", "t", "f", "x", "r", "d", "z", "e", "s", "w", "q", "q"];
@@ -22,7 +22,23 @@ describe('substitution', () => {
         const actual = substitution(input, alphabet, encode);
         expect(actual).to.be.false;
     });
-    it('should encode to plm', () => {
+    it('should return false if no input is provided', () => {
+        const alphabet = "plmoknijbuhvygctfxrdzeswaq";
+        const encode = true;
+
+        const expected = false;
+        const actual = substitution(alphabet, encode);
+        expect(actual).to.be.false;
+    });
+    it('should return false if no alphabet is provided', () => {
+        const input = "Hello world!";
+        const encode = true;
+
+        const expected = false;
+        const actual = substitution(input, encode);
+        expect(actual).to.be.false;
+    })
+    it('should correctly encode inputted phrase', () => {
         const alphabet = "plmoknijbuhvygctfxrdzeswaq";
         const input = "abc";
         const encode = true;
@@ -31,7 +47,7 @@ describe('substitution', () => {
         const actual = substitution(input, alphabet, encode);
         expect(actual).to.equal(expected);
     })
-    it('should decode to "message"', () => {
+    it('should correctly decode inputted phrase', () => {
         const alphabet = ["p", "l", "m", "o", "k", "n", "i", "j", "b", "u", "h", "v", "y", "g", "c", "t", "f", "x", "r", "d", "z", "e", "s", "w", "a", "q"];
         const input = "ykrrpik";
         const encode = false;
@@ -47,15 +63,15 @@ describe('substitution', () => {
 
         const expected = "p l m";
         const actual = substitution(input, alphabet, encode);
-        expect(actual).to.equal(expected);
+        expect(actual).to.eql(expected);
     });
-    it('maintains capital letters whilst encoding', () => {
+    it('should ignore capital letters', () => {
         const alphabet = "plmoknijbuhvygctfxrdzeswaq";
         const input = "A b C";
         const encode = true;
 
-        const expected = "P l M";
+        const expected = "p l m";
         const actual = substitution(input, alphabet, encode);
-        expect(actual).to.equal(expected);
+        expect(actual).to.eql(expected);
     })
 });
