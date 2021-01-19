@@ -73,5 +73,23 @@ describe('substitution', () => {
         const expected = "p l m";
         const actual = substitution(input, alphabet, encode);
         expect(actual).to.eql(expected);
-    })
+    });
+    it('should encode input where alphabet contains non-alphanumeric chars', () => {
+        const alphabet = "pl$oknijbuhvygctfxrdzeswaq";
+        const input = "abc d";
+        const encode = true;
+
+        const expected = "pl$ o";
+        const actual = substitution(input, alphabet, encode);
+        expect(actual).to.equal(expected);
+    });
+    it('Should allow the alphabet to contain symbols and special characters', () => {
+        const expected = 'jr$fscpw';
+        const actual = substitution('thinkful', 'xoyqmcgr$kswaflnthdjpzibev');
+        expect(actual).to.equal(expected);
+    
+        const expected1 = 'thinkful';
+        const actual1 = substitution('jr$fscpw', 'xoyqmcgr$kswaflnthdjpzibev', false);
+        expect(actual1).to.equal(expected1);
+      });
 });

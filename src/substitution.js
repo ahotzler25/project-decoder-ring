@@ -26,7 +26,7 @@ function substitution(input, alphabet, encode = true) {
     
         for (let i = 0; i < lowerCaseInput.length; i++) {
             for (let j = 0; j < alphabet.length; j++) {
-                if (lowerCaseInput.charCodeAt(i) < 65 || lowerCaseInput.charCodeAt(i) > 122 || lowerCaseInput.charCodeAt(i) > 91 && lowerCaseInput.charCodeAt(i) < 97) {
+                if (lowerCaseInput.charCodeAt(i) < 65 || lowerCaseInput.charCodeAt(i) > 122) {
                     finalArray.push(lowerCaseInput[i]);
                     break;
                 } else if (lowerCaseInput.charCodeAt(i) > 64 && lowerCaseInput.charCodeAt(i) < 91) {
@@ -45,7 +45,7 @@ function substitution(input, alphabet, encode = true) {
     
         for (let i = 0; i < lowerCaseInput.length; i++) {
             for (let j = 0; j < alphabet.length; j++) {
-                if (lowerCaseInput.charCodeAt(i) < 65 || lowerCaseInput.charCodeAt(i) > 122 || lowerCaseInput.charCodeAt(i) > 91 && lowerCaseInput.charCodeAt(i) < 97) {
+                if (lowerCaseInput.charCodeAt(i) === 32) {
                     finalArray.push(lowerCaseInput[i]);
                     break;
                 } else if (lowerCaseInput.charCodeAt(i) > 64 && lowerCaseInput.charCodeAt(i) < 91) {
